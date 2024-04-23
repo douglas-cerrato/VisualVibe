@@ -1,14 +1,4 @@
 <?php
-    require_once('db_connection.php');
-
-    // This is here to show us errors in our code in the sit has an issue
-    // with something server side
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-
-    // Get database connection
-    $conn = getDBConnection();
-
 ?>
 
 <!DOCTYPE html>
