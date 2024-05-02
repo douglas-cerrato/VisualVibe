@@ -1,4 +1,11 @@
 <?php
+    
+    require 'SignupBackend.php';
+
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        workWithData($_POST['fname'],$_POST['lname'],$_POST['email'],$_POST['password'],$_POST['retypePassword']);
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
