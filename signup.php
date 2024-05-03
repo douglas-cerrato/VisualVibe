@@ -1,12 +1,3 @@
-<?php
-    
-    require 'SignupBackend.php';
-
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        workWithData($_POST['fname'],$_POST['lname'],$_POST['email'],$_POST['password'],$_POST['retypePassword']);
-    }
-    
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +9,7 @@
 <body>
     <div class="signup-container">
         <h1>Join Visual Vibe</h1>
-        <form id="signup-form">
+        <form id="signup-form" action="SignupBackend.php" method="post">
             <input type="text" id="fname" name="fname" placeholder="First Name" required>
             <input type="text" id="lname" name="lname" placeholder="Last Name" required>
             <input type="email" id="email" name="email" placeholder="Email" required>
