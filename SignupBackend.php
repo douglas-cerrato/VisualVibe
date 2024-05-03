@@ -1,4 +1,8 @@
 <?php
+
+    # We are using SendGrid API to send emails
+    # Looking for an API to validate an email address 
+
     require_once('DBConnection.php');
 
     # Grab First name
@@ -20,14 +24,8 @@
         $password = $_POST['password'];
         $retypePassword = $_POST['retypePassword'];
         
-        if ($password = $retypePassword){
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            
-            // Creating SQL Query
-            
-        } else{
-            $mismatchedPasswords = true;
-        }
+        
+
     }
 
 ?>  
