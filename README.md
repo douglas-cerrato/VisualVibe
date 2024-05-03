@@ -35,3 +35,65 @@ To get started with VisualVibe, simply sign up for an account at [visualvibe.dou
 ## Technologies Used
 
 VisualVibe is built using PHP, JavaScript, CSS, and HTML.
+
+
+# Features per Page - Visual Vibe
+-------------------------------------
+
+## SignUp Page
+- [x] First Name
+- [x] Last Name
+- [x] Email
+- [ ] Password
+- [ ] Verify Password
+
+### Set Username Page
+- [ ] Username page
+
+### Verify Email Page
+- [ ] Text Box asking for code that will be emailed to user
+
+### Main Feed Page
+
+## Login Page
+- [ ] Email
+- [ ] Password
+- [ ] Forgot password
+
+### Main Feed Page
+
+## Profile Page
+- [ ] Edit Profile
+  - [ ] Bio
+  - [ ] Username
+  - [ ] PFP
+  - [ ] Private or Public
+- [ ] Archived Posts
+- [ ] Settings
+  - [ ] Change Password
+  - [ ] Email 2FA
+    - [ ] SetUp or Change (Phone Number)
+    - [ ] Phone 2FA
+  - [ ] SignOut
+  - [ ] You have been signed out Page
+  - [ ] Delete
+    - [ ] Account Successfully Deleted Page
+- [ ] Follower Count
+- [ ] Following Count
+- [ ] Posts
+- [ ] Tagged Posts
+
+## Explore Page
+- [ ] Home
+  - [ ] Refresh Page
+- [ ] Notifications
+  - [ ] List of Notifications
+- [ ] Profile
+  - [ ] Profile Page
+- [ ] Search Bar
+  - [ ] Search Bar Page
+- [ ] Random Posts
+- [ ] Messages
+  - [ ] All Messages Pages
+- [ ] Followers Posts
+- [ ] Post Button
