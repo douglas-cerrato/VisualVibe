@@ -20,10 +20,6 @@
     # above but dont save to database yet
 
     $conn = getDBConnection();
-    $emailAlreadyExists = false;
-    $mismatchedPasswords = false;
-    $invalidEmail = false;
-    $informationPassed = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Retrieve data from POST request
@@ -46,45 +42,34 @@
 
         // Check if a row was returned
         if($result != NULL){
-            $emailAlreadyExists = true;
-        }else{
-            // Limited Calls to API for email validation. 
-            // That is why we only call this api if we know the email is new 
-            // and not in our database
-
-            // Check if both passwords were matching
-            if ($password == $retypePassword){
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-                // Passwords do match, throwing final check in here to save on 
-                // Tokens used for this process. This area only hits if every other
-                // process has validated true for every check. 
-                // Validating whether the email exists
-                $api_key = returnAbstractApiKey();
-
-                $ch = curl_init();
-
-                curl_setopt_array($ch, [
-                    CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_FOLLOWLOCATION => true
-                ]);
-
-                $response = curl_exec($ch);
-                curl_close($ch);
-                $data = json_decode($response, true);
-
-                if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
-                    $invalidEmail = true;
-                }
-
-            } else{
-                $mismatchedPasswords = true; 
-            }
+            header('Location: signup.php?error=email_exists');
+            exit();
         }
 
-        // If user passed every condition
-        if (!$emailAlreadyExists && !$invalidEmail && !$mismatchedPasswords){
-            $informationPassed = true;
+        // Check if passwords don't match
+        if($password != $retypePassword){
+            header('Location: signup.php?error=password_mismatch');
+            exit();
         }
+
+        // Check if Email is valid
+        $api_key = returnAbstractApiKey();
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true
+        ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $data = json_decode($response, true);
+
+        if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN") {
+            // Invalid email
+            header('Location: signup.php?error=invalid_email');
+            exit();
+        }
+        
+        header('Location: create_username.php');
+
     } 
