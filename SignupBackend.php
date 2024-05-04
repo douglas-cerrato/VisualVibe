@@ -72,16 +72,19 @@
             header('Location: signup.php?error=invalid_email');
             exit();
         }
-        
-        // Create URL passing all parameters if the User passes all validations
-        $url = 'create_username.php?';
-        $url = 'create_username.php?';
-        $url .= 'fname=' . urlencode($fname) . '&';
-        $url .= 'lname=' . urlencode($lname) . '&';
-        $url .= 'email=' . urlencode($email) . '&';
-        $url .= 'hashedPassword=' . urlencode($hashedPassword);
 
-        header('Location: ' . $url);
+        // Start session to hold variables needed for Username Creation
+        // Since we do not add to the database until the user picks a unique username
+        session_start();
+
+        // Store the data in session variables
+        $_SESSION['fname'] = $fname;
+        $_SESSION['lname'] = $lname;
+        $_SESSION['email'] = $email;
+        $_SESSION['hashedPassword'] = $hashedPassword;
+
+        // Redirect to create_username.php
+        header('Location: create_username.php');
         exit();
 
     } 
