@@ -51,9 +51,9 @@
             header('Location: signup.php?error=password_mismatch');
             exit();
         }else{
-            $hashedPassword = password_hash($passwd, PASSWORD_BCRYPT);
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         }
-        
+
         // Call to API passing in api key and email
         $api_key = returnAbstractApiKey();
         $ch = curl_init();
@@ -72,7 +72,7 @@
             header('Location: signup.php?error=invalid_email');
             exit();
         }
-        
+
         // Start session to hold variables needed for Username Creation
         // Since we do not add to the database until the user picks a unique username
         session_start();
