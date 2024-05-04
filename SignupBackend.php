@@ -50,9 +50,11 @@
         if($password != $retypePassword){
             header('Location: signup.php?error=password_mismatch');
             exit();
+        }else{
+            $hashedPassword = password_hash($passwd, PASSWORD_BCRYPT);
         }
 
-        // Check if Email is valid
+        // Call to API passing in api key and email
         $api_key = returnAbstractApiKey();
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -64,12 +66,22 @@
         curl_close($ch);
         $data = json_decode($response, true);
 
+        // Check returned value to see if the email passed is a valid email
         if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN") {
             // Invalid email
             header('Location: signup.php?error=invalid_email');
             exit();
         }
         
-        header('Location: create_username.php');
+        // Create URL passing all parameters if the User passes all validations
+        $url = 'create_username.php?';
+        $url = 'create_username.php?';
+        $url .= 'fname=' . urlencode($fname) . '&';
+        $url .= 'lname=' . urlencode($lname) . '&';
+        $url .= 'email=' . urlencode($email) . '&';
+        $url .= 'hashedPassword=' . urlencode($hashedPassword);
+
+        header('Location: ' . $url);
+        exit();
 
     } 
