@@ -42,32 +42,35 @@
         // Check if a row was returned
         if($result){
             $emailAlreadyExists = true;
-        }
+        }else{
+            // Limited Calls to API for email validation. 
+            // That is why we only call this api if we know the email is new 
+            // and not in our database
+            
+            // Validating whether the email exists
+            $api_key = returnAbstractApiKey();
 
+            $ch = curl_init();
 
-        // Validating whether the email exists
-        $api_key = returnAbstractApiKey();
+            curl_setopt_array($ch, [
+                CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true
+            ]);
 
-        $ch = curl_init();
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $data = json_decode($response, true);
 
-        curl_setopt_array($ch, [
-            CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true
-        ]);
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($response, true);
-
-        if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
-            $invalidEmail = true;
-        }
-        
-        // Check if both passwords were matching
-        if ($password == $retypePassword){
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        } else{
-            $mismatchedPasswords = true;
+            if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
+                $invalidEmail = true;
+            }
+            
+            // Check if both passwords were matching
+            if ($password == $retypePassword){
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            } else{
+                $mismatchedPasswords = true;
+            }
         }
     } 
