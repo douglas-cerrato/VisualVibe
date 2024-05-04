@@ -6,6 +6,11 @@
     require_once('DBConnection.php');
     require_once('apiKeys.php');
 
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
     # Grab First name
     # Grab Last Name
     # Grab Email
@@ -33,44 +38,53 @@
         // Create a prepared statement
         $stmnt = $conn->prepare($sql_query);
         // Bind parameters
-        $stmnt->bindParam(1, $email);
+        $stmnt->bind_param("s", $email);
         // Execute the statement
         $stmnt->execute();
         // Gather results
-        $result = $stmnt->fetch();
+        $result = $stmnt->get_result()->fetch_assoc();
 
         // Check if a row was returned
-        if($result){
+        if($result != NULL){
             $emailAlreadyExists = true;
         }else{
             // Limited Calls to API for email validation. 
             // That is why we only call this api if we know the email is new 
             // and not in our database
-            
-            // Validating whether the email exists
-            $api_key = returnAbstractApiKey();
 
-            $ch = curl_init();
-
-            curl_setopt_array($ch, [
-                CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true
-            ]);
-
-            $response = curl_exec($ch);
-            curl_close($ch);
-            $data = json_decode($response, true);
-
-            if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
-                $invalidEmail = true;
-            }
-            
             // Check if both passwords were matching
             if ($password == $retypePassword){
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+                // Passwords do match, throwing final check in here to save on 
+                // Tokens used for this process. This area only hits if every other
+                // process has validated true for every check. 
+                // Validating whether the email exists
+                $api_key = returnAbstractApiKey();
+
+                $ch = curl_init();
+
+                curl_setopt_array($ch, [
+                    CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_FOLLOWLOCATION => true
+                ]);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $data = json_decode($response, true);
+
+                if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
+                    $invalidEmail = true;
+                }
+
             } else{
-                $mismatchedPasswords = true;
+                $mismatchedPasswords = true; 
             }
+        }
+
+        // If user passed every condition
+        if (!$emailAlreadyExists && !$invalidEmail && !$mismatchedPasswords){
+            $informationPassed = true;
         }
     } 
