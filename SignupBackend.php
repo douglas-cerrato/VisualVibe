@@ -15,8 +15,10 @@
     # above but dont save to database yet
 
     $conn = getDBConnection();
+    $emailAlreadyExists = false;
     $mismatchedPasswords = false;
-    $invaldEmail = false;
+    $invalidEmail = false;
+    $informationPassed = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Retrieve data from POST request
@@ -25,7 +27,24 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $retypePassword = $_POST['retypePassword'];
-        
+
+        // Check if email already exists in database
+        $sql_query = "SELECT * FROM vibeUsers WHERE Email = ?";
+        // Create a prepared statement
+        $stmnt = $conn->prepare($sql_query);
+        // Bind parameters
+        $stmnt->bindParam(1, $email);
+        // Execute the statement
+        $stmnt->execute();
+        // Gather results
+        $result = $stmnt->fetch();
+
+        // Check if a row was returned
+        if($result){
+            $emailAlreadyExists = true;
+        }
+
+
         // Validating whether the email exists
         $api_key = returnAbstractApiKey();
 
@@ -42,9 +61,13 @@
         $data = json_decode($response, true);
 
         if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
-            $invaldEmail = true;
+            $invalidEmail = true;
         }
-            
-    }
-
-?>  
+        
+        // Check if both passwords were matching
+        if ($password == $retypePassword){
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        } else{
+            $mismatchedPasswords = true;
+        }
+    } 

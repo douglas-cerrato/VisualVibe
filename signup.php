@@ -1,3 +1,6 @@
+<?php 
+    require 'SignupBackend.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +20,11 @@
             <input type="password" id="retypePassword" name="retypePassword" placeholder="Retype Password" required>
             <button type="submit">Sign Up</button>
         </form>
+        <?php
+            // Error Handling for the account creation process 
+            
+
+        ?>
     </div>
 </body>
 </html>
