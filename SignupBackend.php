@@ -1,57 +1,90 @@
 <?php
-    require_once('DBConnection.php');
 
-    // Output errors we are having
+    # We are using SendGrid API to send emails
+    # Looking for an API to validate an email address 
+
+    require_once('DBConnection.php');
+    require_once('apiKeys.php');
+
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    $mismatchedPasswords = false;
-    $accountCreated = false;
-    $emailAlreadyExists = false;
+    # Grab First name
+    # Grab Last Name
+    # Grab Email
+    # Grab Password 
+    # Verify Password
+    # Move to Set Username Page. Store info from 
+    # above but dont save to database yet
 
-    // Setting Connection
     $conn = getDBConnection();
+    $emailAlreadyExists = false;
+    $mismatchedPasswords = false;
+    $invalidEmail = false;
+    $informationPassed = false;
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
-        $firstName = $_POST['fname'];
-        $lastName = $_POST['lname'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Retrieve data from POST request
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
         $email = $_POST['email'];
-        $passwd = $_POST['password'];
-        $verify_passwd = $_POST['repassword'];
-        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $retypePassword = $_POST['retypePassword'];
 
-        if ($passwd == $verify_passwd){
-            $hashedPassword = password_hash($passwd, PASSWORD_BCRYPT);
+        // Check if email already exists in database
+        $sql_query = "SELECT * FROM vibeUsers WHERE Email = ?";
+        // Create a prepared statement
+        $stmnt = $conn->prepare($sql_query);
+        // Bind parameters
+        $stmnt->bind_param("s", $email);
+        // Execute the statement
+        $stmnt->execute();
+        // Gather results
+        $result = $stmnt->get_result()->fetch_assoc();
 
-            // Creating SQL Query
-            $sql_query = "INSERT INTO vibeUsers (Email, Password, firsrName, lastName) VALUES (?,?,?,?)";
+        // Check if a row was returned
+        if($result != NULL){
+            $emailAlreadyExists = true;
+        }else{
+            // Limited Calls to API for email validation. 
+            // That is why we only call this api if we know the email is new 
+            // and not in our database
 
-            // Create a prepared statement
-            $stmnt = $conn->prepare($sql_query);
+            // Check if both passwords were matching
+            if ($password == $retypePassword){
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            // Bind the parameters to the placeholders
-            $stmnt->bind_param("ssss", $email, $hashedPassword, $fname, $lname);
+                // Passwords do match, throwing final check in here to save on 
+                // Tokens used for this process. This area only hits if every other
+                // process has validated true for every check. 
+                // Validating whether the email exists
+                $api_key = returnAbstractApiKey();
 
-            try {
-                // Execute the statement
-                $stmnt->execute();
-                $accountCreated = true;
-            } catch (Exception $e) {
-                // Check if the error message contains the duplicate entry error code
-                if (strpos($e->getMessage(), "Duplicate entry") !== false) {
-                    $emailAlreadyExists = true;
-                } else {
-                    // Other errors
-                    die("Error inserting data: " . $e->getMessage());
+                $ch = curl_init();
+
+                curl_setopt_array($ch, [
+                    CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_FOLLOWLOCATION => true
+                ]);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $data = json_decode($response, true);
+
+                if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN"){
+                    $invalidEmail = true;
                 }
+
+            } else{
+                $mismatchedPasswords = true; 
             }
-
-            // Close the statement and connection
-            $stmnt->close();
-            $conn->close();
-
-        } else{
-            $mismatchedPasswords = true;
         }
-    }
-?>
+
+        // If user passed every condition
+        if (!$emailAlreadyExists && !$invalidEmail && !$mismatchedPasswords){
+            $informationPassed = true;
+        }
+    } 
