@@ -11,9 +11,6 @@
     $email = $_SESSION['email'];
     $hashedPassword = $_SESSION['$hashedPassword'];
 
-    // Unset all session variables
-    session_unset();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST['username'];
         $sql_query = "SELECT * FROM vibeUsers WHERE Username = ?";
@@ -21,15 +18,11 @@
         $stmnt->bind_param("s", $username);
         $stmnt->execute();
         $result = $stmnt->get_result()->fetch_assoc();
-
+        
         if($result != NULL){
-            $usernameTaken = true;
-            header('Location: create_username.php');
-            exit();
+            $usernameTaken = true;           
         }else{
-            $uniqueUsername = true;
-            header('Location: create_username.php');
-            exit();
+            $uniqueUsername = true;     
         }
     }
 ?>
@@ -56,9 +49,16 @@
         }
         if($uniqueUsername == true){
             echo '<p style="color: green;">Username Created!</p>';
-            // Sleep so User can see message
-            sleep(5);
-            die("User created a unique username");
+
+            /*
+            // Saving Data to SQL Database
+            $sql_query = "INSERT INTO vibeUsers (Email, Password, Username, firstName, lastName) VALUES (?, ?, ?, ?, ?)";
+            $stmnt = $conn->prepare($sql_query);
+            $stmnt->bind_param("ssss", $email, $hashedPassword, $username, $fname, $lname);
+            $stmnt-execute();
+            */
+            echo '<meta http-equiv="refresh" content="1;url=login.php">';
+            exit();
         }
     ?>
 </body>
