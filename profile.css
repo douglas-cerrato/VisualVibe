@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.posts-container {
+    display: block;
+    padding: 10px;
+    padding-top: 0;
+    margin-top: 10px;
+    height:fit-content;
+    width: 90%;
+    border: 1px solid #ccc;
+    max-width: 800px;
+}
+
+.tagged-posts-container {
+    display: none;
+    padding: 10px;
+    padding-top: 0;
+    margin-top: 10px;
+    max-width: 800px;
+    height:fit-content;
+    width: 90%;
+    border: 1px solid #ccc;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.header-content {
+    flex-grow: 1;
+}
+
+.header h1 {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+}
+
+.bio {
+    margin-top: -100px;
+    border: 1px solid #ccc;
+    width: 60%;
+    height: 150px;
+    padding: 0 10px;
+    margin-right: auto;
+}
+
+.header img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+    margin-bottom: 20px;
+}
+
+.counts {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.count {
+    margin: 0 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -230px;
+}
+
+.posts-tags-container {
+    text-align: center;
+    margin-top: 170px;
+}
+
+.posts-tags-container button {    
+    background-color: #5c67f2;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 120px;
+    border: none;
+    cursor: pointer;
+    margin-right: 50px;
+    margin-left: -45px;
+}
+
+.posts-tags-container button:hover {
+    background-color: #4a50e0;
+}
+
+.dropdowns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+    margin-right: 10px;
+}
+
+.dropbtn {
+    background-color: #5c67f2;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 120px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #5c67f2;
+    width: 120px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #4a50e0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown:hover .dropbtn {
+    background-color: #4a50e0;
+}
