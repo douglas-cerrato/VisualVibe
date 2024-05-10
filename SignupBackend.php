@@ -50,9 +50,11 @@
         if($password != $retypePassword){
             header('Location: signup.php?error=password_mismatch');
             exit();
+        }else{
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         }
 
-        // Check if Email is valid
+        // Call to API passing in api key and email
         $api_key = returnAbstractApiKey();
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -64,12 +66,25 @@
         curl_close($ch);
         $data = json_decode($response, true);
 
+        // Check returned value to see if the email passed is a valid email
         if ($data['deliverability'] == "UNDELIVERABLE" || $data['deliverability'] == "UNKNOWN") {
             // Invalid email
             header('Location: signup.php?error=invalid_email');
             exit();
         }
-        
+
+        // Start session to hold variables needed for Username Creation
+        // Since we do not add to the database until the user picks a unique username
+        session_start();
+
+        // Store the data in session variables
+        $_SESSION['fname'] = $fname;
+        $_SESSION['lname'] = $lname;
+        $_SESSION['email'] = $email;
+        $_SESSION['hashedPassword'] = $hashedPassword;
+
+        // Redirect to create_username.php
         header('Location: create_username.php');
+        exit();
 
     } 
