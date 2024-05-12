@@ -57,7 +57,9 @@
             $stmnt->bind_param("ssss", $email, $hashedPassword, $username, $fname, $lname);
             $stmnt-execute();
             */
-            echo '<meta http-equiv="refresh" content="1;url=login.php">';
+            
+            // Go to Email Verification page
+            
             exit();
         }
     ?>
