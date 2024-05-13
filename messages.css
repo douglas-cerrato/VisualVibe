@@ -5,7 +5,7 @@ body, html {
 }
 
 header {
-    background-color: grey;
+    background-color: lightgrey;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -15,10 +15,16 @@ nav {
     align-items: center;
 }
 
+.nav-links li a:hover {
+	color: blue;
+	box-shadow: 5px 5px 5px rgba(5, 5, 5, 5);
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     margin-right: auto;
+    color: black;
 }
 
 .search-bar {
@@ -31,6 +37,7 @@ nav {
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+    background-color: #fff;
 }
 
 .nav-links {
@@ -44,7 +51,7 @@ nav {
 
 .nav-links li a {
     text-decoration: none;
-    color: #333;
+    color: black;
 }
 .container {
     display: flex;
@@ -53,8 +60,8 @@ nav {
 
 .sidebar {
     width: 300px;
-    background-color: #2b2b2b;
-    color: white;
+    background-color: #f0f0f0;
+    color: #333;
     overflow-y: auto;
 }
 
@@ -66,12 +73,12 @@ nav {
 
 .user {
     padding: 20px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
 
 .user:hover {
-    background-color: #333;
+    background-color: #e5e5e5;
 }
 
 .chat-area {
@@ -82,8 +89,8 @@ nav {
 
 .chat-display {
     flex-grow: 1;
-    background-color: #333;
-    color: white;
+    background-color: #e5e5e5;
+    color: #333;
     padding: 20px;
     overflow-y: auto;
 }
@@ -91,7 +98,7 @@ nav {
 .message-input {
     display: flex;
     padding: 10px;
-    background-color: #222;
+    background-color: #ddd;
 }
 
 .message-input input {
@@ -104,7 +111,7 @@ nav {
 
 .message-input button {
     padding: 10px 20px;
-    background-color: #565656;
+    background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
@@ -112,13 +119,13 @@ nav {
 }
 
 .message-input button:hover {
-    background-color: #787878;
+    background-color: #565656;
 }
 
 .message {
     padding: 10px;
     border-radius: 10px;
-    background: #4a4a4a;
+    background: #777;
     margin: 10px 0;
     color: white;
     width: fit-content;
