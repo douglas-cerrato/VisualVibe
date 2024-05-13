@@ -50,6 +50,7 @@ if($usernameTaken == true){
 if($uniqueUsername == true){
 	echo '<p style="color: green;">Username Created!</p>';
 
+
 	    /*
 	    // Saving Data to SQL Database
 	    $sql_query = "INSERT INTO vibeUsers (Email, Password, Username, firstName, lastName) VALUES (?, ?, ?, ?, ?)";
@@ -62,5 +63,20 @@ if($uniqueUsername == true){
 }
 ?>
     </div>
+
+            /*
+            // Saving Data to SQL Database
+            $sql_query = "INSERT INTO vibeUsers (Email, Password, Username, firstName, lastName) VALUES (?, ?, ?, ?, ?)";
+            $stmnt = $conn->prepare($sql_query);
+            $stmnt->bind_param("ssss", $email, $hashedPassword, $username, $fname, $lname);
+            $stmnt-execute();
+            */
+            
+            // Go to Email Verification page
+            
+            exit();
+        }
+    ?>
+ ab754639562d260996a3fcf707ec6b267cc670d1
 </body>
 </html>
