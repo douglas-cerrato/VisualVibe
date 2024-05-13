@@ -52,6 +52,11 @@ nav {
     color: #333;
 }
 
+.nav-links li a:hover {
+    color: blue;
+    box-shadow: 5px 5px 5px rgba(5, 5, 5, 5);
+}
+
 main {
     padding: 20px;
 }
@@ -70,7 +75,7 @@ main {
 
 .post img {
     width: 100%;
-    height: auto;
+    height: 75%;
 }
 
 .post-metadata {
