@@ -1,0 +1,128 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: center;
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+.search-bar {
+    margin-right: 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 10px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links li a:hover {
+    color: blue;
+    box-shadow: 5px 5px 5px rgba(5, 5, 5, 5);
+}
+
+
+.container {
+      margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: center;
+    flex-direction: center;
+    align-items: center;
+}
+
+.form-container, .info-box {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], textarea, input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5C67F2;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input[type="submit"]:hover {
+    background-color: #5058e5;
+}
+
+.info-box {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    color: #333;
+}
+
+.info-box h3 {
+    color: #5C67F2;
+    margin-top: 0;
+}
+
+.info-box p {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+

@@ -1,0 +1,133 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: lightgrey;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li a:hover {
+	color: blue;
+	box-shadow: 5px 5px 5px rgba(5, 5, 5, 5);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: auto;
+    color: black;
+}
+
+.search-bar {
+    margin-right: 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background-color: #fff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 10px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: black;
+}
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #f0f0f0;
+    color: #333;
+    overflow-y: auto;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.user:hover {
+    background-color: #e5e5e5;
+}
+
+.chat-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-display {
+    flex-grow: 1;
+    background-color: #e5e5e5;
+    color: #333;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.message-input {
+    display: flex;
+    padding: 10px;
+    background-color: #ddd;
+}
+
+.message-input input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.message-input button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message-input button:hover {
+    background-color: #565656;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    background: #777;
+    margin: 10px 0;
+    color: white;
+    width: fit-content;
+    max-width: 70%;
+}
